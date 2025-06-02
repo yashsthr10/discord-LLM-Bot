@@ -9,7 +9,7 @@ This is a Discord bot that integrates with a language model (LLM) to create a co
 - 🚫 Bot ignores its own messages.
 - 🔧 Flexible configuration with environment variables for API keys and other settings.
 
-## Setup
+## Local Setup 
 
 Follow the instructions below to get the bot up and running locally.
 
@@ -24,8 +24,8 @@ Follow the instructions below to get the bot up and running locally.
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/discord-llm-bot.git
-    cd discord-llm-bot
+    git clone https://github.com/yashsthr10/discord-LLM-Bot.git
+    cd discord-LLM-Bot
     ```
 
 2. Install dependencies:
@@ -60,10 +60,6 @@ Follow the instructions below to get the bot up and running locally.
 3. Commit your changes (`git commit -am 'Add new feature'`).
 4. Push to the branch (`git push origin feature-branch`).
 5. Create a new Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 

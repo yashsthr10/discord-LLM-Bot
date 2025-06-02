@@ -1,0 +1,25 @@
+name: Deploy to GCP VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.GCP_VM_IP }}
+        username: ${{ secrets.GCP_VM_USER }}
+        key: ${{ secrets.GCP_SSH_KEY }}
+        script: |
+          cd discord-LLM-Bot || git clone git@github.com:yashsthr10/discord-LLM-Bot.git && cd discord-LLM-Bot
+          git pull
+          ./start.sh

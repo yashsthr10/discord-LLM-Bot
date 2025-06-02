@@ -47,3 +47,13 @@ out/
 
 # If you're using TypeScript
 *.tsbuildinfo
+
+key
+key.pub
+key.json
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+crash.log
