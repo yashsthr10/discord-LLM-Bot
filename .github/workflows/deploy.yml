@@ -13,13 +13,28 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    - name: Set up SSH key
+      run: |
+        echo "${{ secrets.GCP_SSH_KEY }}" > key.pem
+        chmod 600 key.pem
+
     - name: Deploy via SSH
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.GCP_VM_IP }}
-        username: ${{ secrets.GCP_VM_USER }}
-        key: ${{ secrets.GCP_SSH_KEY }}
-        script: |
-          cd discord-LLM-Bot || git clone git@github.com:yashsthr10/discord-LLM-Bot.git && cd discord-LLM-Bot
-          git pull
-          ./start.sh
+      env:
+        ENV_FILE: ${{ secrets.ENV_FILE }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i key.pem yash@${{ secrets.GCP_VM_IP }} << EOF
+          cd /home/yash/discord-LLM-bot || git clone https://github.com/yashsthr10/discord-LLM-Bot.git && cd discord-LLM-Bot
+          git pull origin main
+          export NVM_DIR="\$HOME/.nvm"
+          [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+          nvm install node
+          npm install -g pm2
+          npm install
+
+          cat > .env <<EOL
+          \$ENV_FILE
+        EOL
+          pm2 stop bot || true
+          pm2 start src/bot.js --name bot
+        EOF
+
